@@ -1,0 +1,104 @@
+General Feautres of C++ 11 & 14
+
+1. constexpr	//during compile time replace the value/ return of value from function
+
+	a. Thumb rule Avoid Magic constants in coding
+		(Magic constants -  Eg MilesPerHour)
+	b. To over come we can use macros but preprocessor is not type safety
+	c. GLobal variable even this is not safe
+	 
+	- To over come all above 'constexpr' was introduced
+	- macros can be replaced with constexpr
+	constexpr are stored in .rodata section
+	- .rodata content will be mapped to flash/ROMablilty (read only rather than read write like RAM)
+	TODO:
+	- observe symbol table using nm/objdump for constexpr variable
+	
+		
+2. auto type // declares the type of variable and wont show it
+	- Auto is kind of replacement for Template
+	- Loop variables in range based loops
+	- auto iter = stl_var.begin();
+	TODO:
+	g++ -v  => g++ version 9.3.0
+	g++ hello.cpp -std    => c++11
+
+
+3. decl type // extracts type from return of fucntion
+	Examples:
+		- int x=10;double y;
+		- decltype(x+y) z;
+		- auto res=testcall();
+		- decltype(res) val;
+		
+		- template<typename decltype(sum(a,b))>
+		  class myArray
+		  {};
+		  
+		 - int a[] = {1,2,3};
+		 - std::vector<decltype(a[0])> v1;
+
+regular iterator -forward direction
+reverse iterator -reverse direction
+const iterator - forward direction no changes are allowed
+const reverese iterator - reverse direction no changes are allowed
+
+
+4. Range-based for loop  - for ( range_declaration : range_expression ) 
+ 					loop_statement
+  	Examples
+	 	std::map<int, std::string> cities;
+	 	for(auto p: cities)
+	 	{}  // here p is a key value pair
+ 	
+ 		
+5. Strict initializers			
+ 
+6. Nullptr is a keyword
+	Normally NULL is a macro defined in stdio
+	NULL numeric value 0
+	Better replacement for NULL is nullptr
+	nullptr ==> false
+	!nullptr ==> true 					
+ 
+7. Scoped Enum
+	- To avoid collision bw common members among different enum types can be handled by scoped enum by giving class name.
+	
+ 				
+8. static_assert  - static_assert( constant_expression, string_literal ); 
+	//way to check if a condition is true when the code is compiled
+	#error directive issue is solved by static_assert
+	Eg : static_assert(Size > 3, "Vector size is too small!")
+	if condtion is false abnormal terminatio or RUN TIME ERROR 
+
+9. raw string literals
+	PROBLEM
+	//How do you encode above as
+	//a string prior to C++11?
+		const char *payload = "{ \
+			\"id\":\"sample\", \
+			\"temperature\":24, \
+			\"humidity\":72 \
+			}";
+			
+	SOLUTION
+	//A Better way in C++11
+	const char* payload=R"({
+	"id":"sample",
+	"temperature":24,
+	"humidity":72
+	}");
+
+
+10. Binary Literal & Digit Separators
+11. User Defined Literals
+12. Inline Namespaces
+TODO:
+	Value category - pr
+	What is namespace?
+	How to create namespace?
+	How to access symbols from namespace?
+	Usage of "using" keyword
+	Multilevel/Nested namespace
+	Default namespace
+	Anonymous namespace

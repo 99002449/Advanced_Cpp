@@ -1,0 +1,63 @@
+Class and Objects:
+
+1. Default Controls
+	a.Default
+		Even though supression of default constructor is done when parameterized constructor is created. Yet i need to create default constructor using =Default.
+	b. Delete
+		If we want to disable some functions can be done using =Delete
+		
+		Box(int,int)
+		Box(2.3f,4.5f);
+		
+		Box(float,foat)=delete;
+		
+		
+		Sample(double);
+		Sample s1(2.3f);
+		Sample s2(10);
+		
+		Sample(float)=delete;
+		Sample(int)=delete;
+		
+2. Constructor Delegation
+	Any private function which cannot be used outside the class can help the public functions using keyword 'helper functions'
+	
+3. In  Initializers list
+	- Regular constructors has fixed number of arguments 
+	- we can pass any number of arguments for constructors 
+	
+4. Explicit inheritance of constructors 
+
+	class A  {
+	  public:
+	  int sum(int,int);
+	};
+	class B {
+	  public:
+	  int sum(int,int,int);
+	};
+
+ 
+	B b1;
+	b1.sum(10,12,5);    //ok
+	b1.sum(10,12);    //error
+
+	 
+
+	using A::sum(int,int);    //in class B
+	//now B objects can call sum with two arguments
+	
+	
+	
+//TODO:
+Const overloading in c++
+
+
+
+
+MOVE SEMANTICS:
+	r-value references
+	std::move
+	move constructor
+	move operator=
+
