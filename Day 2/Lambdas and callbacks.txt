@@ -1,0 +1,117 @@
+			LAMBDAS
+			
+//TODO: 
+	1. C++ algorithm library -> en.cppreference.com
+	2. Understand STL algorithms
+	     Unary Predicate
+		1. std::find
+		2. std::find_if
+		3. std::count
+		4. std::count_if
+		5. std::copy_if
+		6. std::remove_if
+	     Binary Predicate
+		1. std::sort
+		2. std::minval
+		3. std::maxval
+	3. referesh move semantics, lambdas
+	4. explore STL algorithms, apply in coding task with lambdas
+	5. file handling by ofstream, ifstream
+	
+	Pre-read:
+		1. std::bind
+		2. some topics on templates
+		3. smart pointers
+		
+	
+	
+	
+Function pointers:
+
+	//Function pointers
+	int (*fptr) (int, int);
+	fptr = sum;
+	
+	
+	
+	//Array of Function pointers
+	int (*fparr[4])(int, int);
+	fparr[0]=sum;
+	fparr[1]=diff;
+	fparr[2]=mul;
+	fparr[3]=div;
+	res - (fparr[i])(a,b);
+	
+Capture syntax
+	[=] -> all variables are accessible within the scope of lambda function defined
+	[var_name] -> var_name is accessible within the scope of lambda function defined
+	
+
+
+std::function
+
+
+	1. std::function<int(int,int)> fsum=sum;	
+		equivalent to =>  int (*fptr) (int, int);	
+	
+	2. std::function<int(int,int)> ftable[4];
+		equivalent to => int (*fparr[4])(int, int);
+		
+	3. std::vector < std::function<int(int,int)> > fvector
+	   std::list < std::function<int(int,int)> > flist;
+	   std::map < int, std::function<int(int,int)> > fmap;
+	   using fcomp = std::function<int(int,int)>;
+
+
+EXAMPLE:
+
+	int Banking::countAccountsWithMinBal(double minval)
+	 {
+	  	int count=0;
+	  	count = std::count_if(accounts.begin(), accounts.end(),
+		                            [minval](const Account& ref) {
+	    	return ref.getBalance() > minval;
+	  	});
+	  	return count;
+	}	   
+	   
+	
+	
+1. Unary Predicate - One element wil be taken one at a time from container and perform action
+
+	Example:
+	int Banking::countAccountsWithMinBal(double minval)
+	 {
+	  	int count=0;
+	  	count = std::count_if(accounts.begin(), accounts.end(),
+		                            [minval](const Account& ref) {
+	    	return ref.getBalance() > minval;
+	  	});
+	  	return count;
+	}	
+
+
+
+Binary Predicate - Two element wil be taken one at a time from container and perform action
+
+	Example:
+	1.
+	void Banking::sortByBalance() 
+	{
+	   	//std::sort(accounts.begin(), accounts.end(), bcompare);
+	   	std::sort(accounts.begin(), accounts.end(),
+		        [](const Account& r1, const Account& r2) {
+	   	 return r1.getBalance() < r2.getBalance();
+	  	 });
+	}
+	
+	2.
+	double Banking::findAccountWithMaBalance() 
+	{
+
+  		auto iter = std::maxval(accounts.begin(), accounts.end(), 
+                [](const Account& r1, const Account& r2) {
+                    return r1.getBalance() < r2.getBalance();
+   		});
+	}
+	   

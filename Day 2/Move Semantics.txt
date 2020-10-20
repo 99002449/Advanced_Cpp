@@ -1,0 +1,109 @@
+				MOVE SEMANTICS
+
+Trivial Type:
+	Any thing which is provided by compiler is known as trivial type
+	
+	Trivial Means
+		No virtual fun and classes
+		Defualt const should be trivial
+		shallow copy
+		
+	Rule 3/0
+		copy const
+		const
+		Dest
+		is provided by compiler or added by us.
+		
+		
+	Classes which cannot include trivial are:
+		my copy const
+		my dest 
+		my own operator func
+		
+		
+	How to check whether a classs is trivial or not
+			(if trivial ==>Trivial)
+			
+		1. std::is_trivially_copyable
+		2. std::is_trivial
+		Ex:
+		std::is_trivial<Box> :: value 
+		std::is_trivial<MyStack>::value
+		
+POD - Plain Old Data
+	If class is both Trivial type, standard layout type.
+	
+	
+Move constructor
+	Need of Move constructor
+		in copy const the source content is copied into dest space and the source content is released using destructor
+		
+	In move constr the source content is attached to dest and soruce gets dittached from them content so that dangling wont occur as in shallow copy
+	
+		s1 has var like buff
+	Ex: S1 is moved to s2
+	   => buf is moved from S1 to S2 and S1 gets diattched from S1
+	   
+	   
+	Anonymous objects will match move operations bcoz they are compatbalile with rvalue references
+		std::list<string> names;
+		names.push_back(MySTring("hello"))
+		
+	Anonymous objects or object type casted with std::move  will match move operations bcoz they are compatbalile with rvalue references
+		std::list<string> names;
+		MySTring ps("hello");
+		names.push_back(std::move(ps))
+		
+
+Advanced MOVE concept:	
+	* universal references
+	* reference collapsing
+	* perfect forwarding
+	
+In universal references
+	T&& accepts both lvalue and rvalue references
+	But T&& always execute lvalue reference and supresses rvalue knwon as (reference collapsing)
+	to overcome this we use std::forward<T> -> Perfect Fowarding
+	
+
+Xvalue has no location -> can be moved	
+Pure rvalue -Prvalue has location -> cannot be moved (literals, exprn)
+
+	
+		
+//TODO:
+1. RVO Return Value Optimization
+
+
+2. practical implementation of MOVE 
+
+class point
+{
+	int m_x,m_y;
+	public:
+		//TODO
+};
+int main()
+{
+	point p1(2,3);
+	point p2(p1);
+	point p3;
+	p3 = p1;
+	
+	point p4(std::move(p2)); //p2 ---> (0,0)
+	point p5;
+	ps=(std::move(p4)); //p4 ---> (0,0)
+	
+	return 0;
+}
+	
+3. Check that copy constructor is not provided by compiler if any of the following is implemented
+	- User defined move constructor or move assignment operator
+	- User defined destructor (Not yet)
+	- User defined assignment operator (Not yet)
+	
+	
+	
+	
+
+
