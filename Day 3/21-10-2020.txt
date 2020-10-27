@@ -1,0 +1,7 @@
+Function object:
+	A class whose function
+	
+GLobal function:
+	a func can be called witout class object just by class
+	
+std::unique_ptr ===> return type is Rvalue that is it returns the anonymous object being created.

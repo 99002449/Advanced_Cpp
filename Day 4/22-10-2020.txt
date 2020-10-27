@@ -1,0 +1,80 @@
+		CONCURRENCY and IPC
+		
+Parallel Computation:
+	std::thread
+	std::async
+	
+Threads:
+ * Resource sharing (expcept stack)
+ * Concurrent execution
+ 
+Task driven Parallelism - Each task does its own work with different data.
+Data driven Parallelism - All taks does works on same data.
+				(Eg. parallel sum of large array - pthread)
+				
+				
+				
+std::thread constructor takes:
+	 1. Normal Functions
+	 2. Lambdas expressions
+	 3. Binded functions
+	 4. Function objects (Any class with over loaded function object is ---)
+	 5. Member functions (hint: std::bind)
+	 	
+TODO:
+	1. parallel sum of large array
+	2. Bus locking	
+	
+	3. std::condition_variables
+	4. std::async
+	5. std::future
+	6. std::promise
+	
+Activity:
+	psot read of covered topics (thread,mutex,locks etc)
+	pre read of next topics
+	coding tasks
+	file handling, Namespaces (if pending)
+	Exception handling(give a try)
+	
+	
+-----------------------------------------------------------------------------------------------------------------------
+		IPC
+  1. Race Conditon: Resource being shared by multiple threads and updating it leads to crash(Example 6 for Race condition problem)
+  	Solution
+  		Keep the critical section of code  
+  		Entry Section(Decision Making: 1st person-go/ 2nd person - wait)
+  		Exit Section (Indication to other entry section for entry of 1person)
+  		
+  2. Mutual Exclusion - Only one process/threads enters into critical section
+  	SOlution:
+  		Semaphores (no c++ support)
+  		Mutex
+  		Spinlocks (no c++ support)
+  		Atomic variables (c++ objects)
+  		  	
+  3. Signalling/Synchronization
+  	Solution:
+  		Semaphores (no c++ support)
+  		Condition variables
+  		
+  		
+  
+ atomic_flag:		
+  test_and_set  locks memory-> it uses XCHG and SWP
+  reg=0
+  T1							T2
+  while(XCHG(reg,1));//entry				while(XCHG(reg,1));//busy loop
+  									   // spinning   
+  	//critical section					//critical section
+  reg =0 //exit					reg =0 //exit
+	 		
+NOTE: Busy loop based solutions like spin lock are meanin for Symtric Multicore Process (SMP) only
+
+
+References				
+	en.cppreference.com
+	thispointer.com
+	cpp nuts (11 videos)
+
+

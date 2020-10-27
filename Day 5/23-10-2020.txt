@@ -1,0 +1,94 @@
+condition_variavle
+wait:
+	check the condition using supplied callback
+	if condition is true - continue and mutex is still locked
+	if condition is false - about to block but releases mutex
+	
+notify:
+	condition is typically true, locks the mutex and go ahead.
+	
+
+consumer:
+//actual code
+ 	std::unique_lock<std::mutex> ulck(m1);
+   	cv.wait(ulck, [](){return flag;});
+   	
+Producer:
+	std::unique_lock<std::mutex> ulck(m1);
+	//actual code
+	
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+ NOTE 1:   
+Thread			Async
+join <====>  		get
+no return <====>	return is allowed
+
+
+ NOTE 2:
+
+		JOIN vs CONDITION VARIABLE	
+
+If we dont want to perform any other operation after thrread is completed use "JOIN"
+If we  want to go back even after getting results from thread then use "CONDITION VARIABLE"
+
+refer example17.cpp for Promise  and above notes 1, 2
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Threads returning values:
+
+
+int result;
+void sumarr(int *arr, int len) 
+{
+  int sum=0,i;
+  for(i=0;i<len;i++)
+    sum+=arr[i];
+  result=sum;
+}
+
+ 
+int arr[10];
+//fill with random values
+std::thread t1(sumarr, arr, 10);
+t1.join();
+//print the result
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+	ASYNC
+	//  USING ASYNC
+#include<iostream>
+#include<future>
+int sumarr(int *arr, int len) {
+  int sum=0,i;
+  for(i=0;i<len;i++)
+    sum+=arr[i];
+  return sum;
+}
+
+ 
+
+int main() 
+{
+  int arr[10]={1,2,3,4,5,6,7,8,9,10};
+  std::future<int> result;
+  result=std::async(sumarr, arr, 10);
+  std::cout << result.get()<<std::endl; 
+}
+
+---------------------------------------------------------------------------------------
+TODO:
+	Async
+		get_id from std::thread
+		Detachable Threads
+		std::Future - .get()  (Future is used collect the results from asynchronous  (bcoz return value of async is future it is not primitive data))
+		Simple example, Parllel sum of array, containers
+		Difference between std::launch::deferred vs std::launch::async (Theoritically)
+		
+	Promise
+	condition_variable
+
+
+	
+
